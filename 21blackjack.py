@@ -1,7 +1,7 @@
 import random
 
 #funcion para generar el mazo
-def mazo():
+def generar_mazo():
     cartas = ["Corazones", "Diamantes", "Treboles", "Picas"]
     valores = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
     mazo = [{"valor": valor, 'carta': carta} for valor in valores for carta in cartas]
@@ -30,7 +30,7 @@ def calcular_puntos(mano):
         
     return puntos
 
-def mostrar_mano(mano, oculta = False):
+def mostrar_mano(mano, oculta=False):
     if oculta:
         print(f"Cartas del dealer: [{mano[1]['valor']} de {mano[1]['carta']}] y [Carta Oculta]")
     else:
@@ -38,21 +38,22 @@ def mostrar_mano(mano, oculta = False):
         for carta in mano:
             print(f"[{carta['valor']} de {carta['carta']}]")
 
+
 def blackjack():
-    mazo = mazo()
+    mazo = generar_mazo()
     mano_jugador = [mazo.pop(), mazo.pop()]
     mano_dealer = [mazo.pop(), mazo.pop()]
     
     #Turno del Jugador
     while True:
         mostrar_mano(mano_jugador)
-        puntuacion_juagor = calcular_puntos(mano_jugador)
-        print(f"Puntuación Jugador: {puntuacion_juagor}")
+        puntuacion_jugador = calcular_puntos(mano_jugador)
+        print(f"Puntuación Jugador: {puntuacion_jugador}")
         
-        if puntuacion_juagor == 21:
+        if puntuacion_jugador == 21:
             print("BlackJack ! Has ganado.")
             break
-        elif puntuacion_juagor > 21:
+        elif puntuacion_jugador > 21:
             print("Perdiste!! te has pasado de 21!!")
             break
         
@@ -74,3 +75,17 @@ def blackjack():
         
     print("\n Puntuacion del dealer: ", puntuacion_dealer)
     mostrar_mano(mano_dealer)
+    
+    #definir ganador
+    if puntuacion_dealer > 21:
+        print("El dealer se ha pasado de 21. ¡Has Ganado!")
+    elif puntuacion_jugador > puntuacion_dealer:
+        print("ganaste!!")
+    elif puntuacion_jugador < puntuacion_dealer:
+        print("perdiste!!")
+    else:
+        print("Empate!")
+        
+if __name__ == "__main__":
+    print("Bienvenido al juego de 21 BlackJack")
+    blackjack()
